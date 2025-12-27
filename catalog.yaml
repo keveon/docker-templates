@@ -29,3 +29,7 @@ stacks:
   - id: error-pages
     path: stacks/error-pages
     category: infrastructure
+
+  - id: watchtower
+    path: stacks/watchtower
+    category: automation

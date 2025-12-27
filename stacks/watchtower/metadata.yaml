@@ -1,0 +1,8 @@
+name: Watchtower
+description: 自动更新 Docker 容器镜像，监控并在检测到新版本时自动拉取更新
+category: automation
+tags:
+  - docker
+  - auto-update
+  - container-management
+homepage: https://github.com/containrrr/watchtower

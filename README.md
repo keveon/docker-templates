@@ -31,6 +31,7 @@
 | 服务 | 说明 | 分类 |
 |------|------|------|
 | [error-pages](stacks/error-pages/) | 美观的 HTTP 错误页面服务 | 基础设施 |
+| [watchtower](stacks/watchtower/) | 自动更新 Docker 容器镜像 | 自动化 |
 
 ## 目录结构
 
