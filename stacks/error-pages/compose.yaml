@@ -1,0 +1,27 @@
+services:
+  error-pages:
+    image: tarampampam/error-pages
+    restart: always
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      LOG_FORMAT: ${LOG_FORMAT:-json}
+      SHOW_DETAILS: ${SHOW_DETAILS:-true}
+      TEMPLATE_NAME: ${TEMPLATE_NAME:-lost-in-space}
+    expose:
+      - 8080
+    labels:
+      traefik.enable: true
+      traefik.http.routers.error-pages.rule: HostRegexp(`^.+$`)
+      traefik.http.routers.error-pages.priority: 1
+      # define service properties
+      traefik.http.services.error-pages.loadbalancer.server.port: 8080
+      # "errors" middleware settings
+      traefik.http.middlewares.error-pages.errors.status: 400-599
+      traefik.http.middlewares.error-pages.errors.service: error-pages
+      traefik.http.middlewares.error-pages.errors.query: /{status}.html
+
+networks:
+  default:
+    name: dokploy-network
+    external: true

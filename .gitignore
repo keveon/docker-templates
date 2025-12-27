@@ -1,0 +1,25 @@
+# 环境变量文件
+.env
+*.env.local
+
+# Docker 相关
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# 数据目录（如果有）
+data/
+volumes/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 日志
+*.log
+logs/

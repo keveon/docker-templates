@@ -1,0 +1,8 @@
+name: Error Pages
+description: 美观的 HTTP 错误页面服务，支持多种主题模板，可配合 Traefik 使用
+category: infrastructure
+tags:
+  - traefik
+  - error-handling
+  - middleware
+homepage: https://github.com/tarampampam/error-pages

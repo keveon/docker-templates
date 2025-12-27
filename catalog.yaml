@@ -1,0 +1,31 @@
+version: 1
+
+categories:
+  - id: infrastructure
+    name: 基础设施
+    description: 网络、代理、负载均衡等基础服务
+
+  - id: database
+    name: 数据库
+    description: 关系型数据库、NoSQL、缓存等
+
+  - id: monitoring
+    name: 监控
+    description: 日志、指标、告警、可视化
+
+  - id: development
+    name: 开发工具
+    description: CI/CD、代码托管、协作工具
+
+  - id: storage
+    name: 存储
+    description: 对象存储、文件同步、备份
+
+  - id: automation
+    name: 自动化
+    description: 工作流、任务调度、自动化平台
+
+stacks:
+  - id: error-pages
+    path: stacks/error-pages
+    category: infrastructure
