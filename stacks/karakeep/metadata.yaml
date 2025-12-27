@@ -1,0 +1,9 @@
+name: Karakeep
+description: 自托管书签管理应用，支持保存链接、笔记、图片，具备 AI 自动标签和全文搜索功能
+category: productivity
+tags:
+  - bookmarks
+  - ai
+  - self-hosted
+  - notes
+homepage: https://github.com/karakeep-app/karakeep

@@ -32,6 +32,7 @@
 |------|------|------|
 | [error-pages](stacks/error-pages/) | 美观的 HTTP 错误页面服务 | 基础设施 |
 | [watchtower](stacks/watchtower/) | 自动更新 Docker 容器镜像 | 自动化 |
+| [karakeep](stacks/karakeep/) | 自托管书签管理，支持 AI 自动标签 | 生产力 |
 
 ## 目录结构
 

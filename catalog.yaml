@@ -25,6 +25,10 @@ categories:
     name: 自动化
     description: 工作流、任务调度、自动化平台
 
+  - id: productivity
+    name: 生产力
+    description: 书签、笔记、知识管理工具
+
 stacks:
   - id: error-pages
     path: stacks/error-pages
@@ -33,3 +37,7 @@ stacks:
   - id: watchtower
     path: stacks/watchtower
     category: automation
+
+  - id: karakeep
+    path: stacks/karakeep
+    category: productivity
