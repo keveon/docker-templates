@@ -41,3 +41,7 @@ stacks:
   - id: karakeep
     path: stacks/karakeep
     category: productivity
+
+  - id: rustfs
+    path: stacks/rustfs
+    category: storage

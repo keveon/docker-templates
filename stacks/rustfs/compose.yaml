@@ -1,0 +1,17 @@
+services:
+  rustfs:
+    image: rustfs/rustfs:${RUSTFS_VERSION:-latest}
+    restart: unless-stopped
+    expose:
+      - 9000
+      - 9001
+    volumes:
+      - ${RUSTFS_DATA_PATH:-data}:/data
+    env_file: .env
+    environment:
+      RUSTFS_ADDRESS: ${RUSTFS_ADDRESS:-:9000}
+      RUSTFS_CONSOLE_ADDRESS: ${RUSTFS_CONSOLE_ADDRESS:-:9001}
+      RUSTFS_CONSOLE_ENABLE: ${RUSTFS_CONSOLE_ENABLE:-true}
+
+volumes:
+  data:
