@@ -1,0 +1,9 @@
+name: Sub2API
+description: 订阅转换 API 服务，支持多种代理协议转换和 AI 模型接口聚合
+category: infrastructure
+tags:
+  - proxy
+  - subscription
+  - api
+  - llm
+homepage: https://github.com/weishaw/sub2api

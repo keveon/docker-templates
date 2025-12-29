@@ -49,3 +49,7 @@ stacks:
   - id: checkcle
     path: stacks/checkcle
     category: monitoring
+
+  - id: sub2api
+    path: stacks/sub2api
+    category: infrastructure

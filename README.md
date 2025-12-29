@@ -35,6 +35,7 @@
 | [karakeep](stacks/karakeep/) | 自托管书签管理，支持 AI 自动标签 | 生产力 |
 | [rustfs](stacks/rustfs/) | 高性能 S3 兼容对象存储 | 存储 |
 | [checkcle](stacks/checkcle/) | 自托管监控平台，支持 HTTP/SSL/服务器监控 | 监控 |
+| [sub2api](stacks/sub2api/) | 订阅转换 API 服务，支持多协议转换 | 基础设施 |
 
 ## 目录结构
 
