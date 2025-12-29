@@ -1,0 +1,10 @@
+name: CheckCle
+description: 自托管的开源监控平台，提供全栈系统、应用和基础设施的实时监控
+category: monitoring
+tags:
+  - monitoring
+  - uptime
+  - ssl
+  - self-hosted
+  - status-page
+homepage: https://github.com/operacle/checkcle

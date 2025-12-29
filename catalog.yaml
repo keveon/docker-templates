@@ -45,3 +45,7 @@ stacks:
   - id: rustfs
     path: stacks/rustfs
     category: storage
+
+  - id: checkcle
+    path: stacks/checkcle
+    category: monitoring

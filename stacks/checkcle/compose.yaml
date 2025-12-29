@@ -1,0 +1,16 @@
+services:
+  checkcle:
+    image: operacle/checkcle:${CHECKCLE_VERSION:-latest}
+    container_name: checkcle
+    restart: unless-stopped
+    expose:
+      - "8090"
+    volumes:
+      - data:/mnt/pb_data
+    ulimits:
+      nofile:
+        soft: 4096
+        hard: 8192
+
+volumes:
+  data:
