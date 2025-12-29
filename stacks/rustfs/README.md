@@ -82,6 +82,144 @@ mc mb rustfs/my-bucket
 mc cp file.txt rustfs/my-bucket/
 ```
 
+## 访问密钥管理
+
+RustFS 兼容 AWS S3 IAM 策略格式。在控制台创建访问密钥时，可通过策略限制密钥的访问范围。
+
+### 策略格式
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:操作名称"],
+      "Resource": ["arn:aws:s3:::存储桶名称/*"]
+    }
+  ]
+}
+```
+
+**字段说明：**
+
+| 字段 | 说明 |
+|------|------|
+| `Version` | 固定值 `2012-10-17` |
+| `Effect` | `Allow`（允许）或 `Deny`（拒绝），Deny 优先级更高 |
+| `Action` | S3 操作，支持通配符 `*` |
+| `Resource` | 目标资源 ARN，格式 `arn:aws:s3:::bucket-name/prefix/*` |
+
+### 常用策略示例
+
+#### 单个存储桶完全访问
+
+为密钥授予对 `my-bucket` 存储桶的完全控制权限：
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:*"],
+      "Resource": [
+        "arn:aws:s3:::my-bucket",
+        "arn:aws:s3:::my-bucket/*"
+      ]
+    }
+  ]
+}
+```
+
+> 注意：需要同时指定存储桶本身（`my-bucket`）和桶内对象（`my-bucket/*`）两个资源。
+
+#### 只读访问
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::my-bucket",
+        "arn:aws:s3:::my-bucket/*"
+      ]
+    }
+  ]
+}
+```
+
+#### 上传下载（无删除权限）
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::my-bucket",
+        "arn:aws:s3:::my-bucket/*"
+      ]
+    }
+  ]
+}
+```
+
+#### 动态策略（按用户名自动关联存储桶）
+
+使用策略变量 `${aws:username}`，让访问密钥自动只能访问与其用户名同名的存储桶：
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:*"],
+      "Resource": [
+        "arn:aws:s3:::${aws:username}",
+        "arn:aws:s3:::${aws:username}/*"
+      ]
+    }
+  ]
+}
+```
+
+**使用场景**：创建名为 `app-backup` 的存储桶，然后创建用户名也为 `app-backup` 的访问密钥并应用此策略。该密钥将自动只能访问 `app-backup` 存储桶。
+
+> 这是推荐的做法：创建一个通用策略，然后通过用户名与存储桶名的对应关系实现权限隔离，无需为每个存储桶单独编写策略。
+
+### 策略变量
+
+| 变量 | 说明 |
+|------|------|
+| `${aws:username}` | 当前访问密钥所属的用户名 |
+| `${aws:userid}` | 用户唯一 ID |
+
+### 常用 Action 列表
+
+| Action | 说明 |
+|--------|------|
+| `s3:*` | 所有操作 |
+| `s3:GetObject` | 下载对象 |
+| `s3:PutObject` | 上传对象 |
+| `s3:DeleteObject` | 删除对象 |
+| `s3:ListBucket` | 列出存储桶内容 |
+| `s3:GetBucketLocation` | 获取存储桶位置 |
+| `s3:ListAllMyBuckets` | 列出所有存储桶 |
+
 ## 相关链接
 
 - [项目主页](https://github.com/rustfs/rustfs)
