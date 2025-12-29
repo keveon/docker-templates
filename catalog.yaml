@@ -53,3 +53,7 @@ stacks:
   - id: sub2api
     path: stacks/sub2api
     category: infrastructure
+
+  - id: dozzle
+    path: stacks/dozzle
+    category: monitoring

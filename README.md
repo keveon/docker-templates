@@ -36,6 +36,7 @@
 | [rustfs](stacks/rustfs/) | 高性能 S3 兼容对象存储 | 存储 |
 | [checkcle](stacks/checkcle/) | 自托管监控平台，支持 HTTP/SSL/服务器监控 | 监控 |
 | [sub2api](stacks/sub2api/) | 订阅转换 API 服务，支持多协议转换 | 基础设施 |
+| [dozzle](stacks/dozzle/) | 实时 Docker 容器日志查看器 | 监控 |
 
 ## 目录结构
 
