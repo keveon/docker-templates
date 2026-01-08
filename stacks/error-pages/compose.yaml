@@ -1,7 +1,7 @@
 services:
   error-pages:
     image: tarampampam/error-pages
-    restart: always
+    restart: ${RESTART:-unless-stopped}
     environment:
       TZ: ${TZ:-Asia/Shanghai}
       LOG_LEVEL: ${LOG_LEVEL:-info}

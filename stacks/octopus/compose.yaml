@@ -5,7 +5,7 @@ services:
   octopus:
     image: bestrui/octopus:${VERSION:-latest}
     container_name: octopus
-    restart: unless-stopped
+    restart: ${RESTART:-unless-stopped}
     expose:
       - 8080
     volumes:

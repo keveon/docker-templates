@@ -3,7 +3,7 @@ services:
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
-    restart: always
+    restart: ${RESTART:-unless-stopped}
     environment:
       TZ: ${TZ:-Asia/Shanghai}
       WATCHTOWER_POLL_INTERVAL: ${WATCHTOWER_POLL_INTERVAL:-86400}

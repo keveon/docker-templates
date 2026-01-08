@@ -1,7 +1,7 @@
 services:
   rustfs:
     image: rustfs/rustfs:${RUSTFS_VERSION:-latest}
-    restart: unless-stopped
+    restart: ${RESTART:-unless-stopped}
     expose:
       - 9000
       - 9001

@@ -2,7 +2,7 @@ services:
   checkcle:
     image: operacle/checkcle:${CHECKCLE_VERSION:-latest}
     container_name: checkcle
-    restart: unless-stopped
+    restart: ${RESTART:-unless-stopped}
     expose:
       - "8090"
     volumes:

@@ -1,7 +1,7 @@
 services:
   web:
     image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
-    restart: always
+    restart: ${RESTART:-unless-stopped}
     volumes:
       - data:/data
     env_file: .env
@@ -17,7 +17,7 @@ services:
 
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:124
-    restart: always
+    restart: ${RESTART:-unless-stopped}
     command:
       - --no-sandbox
       - --disable-gpu
@@ -28,7 +28,7 @@ services:
 
   meilisearch:
     image: getmeili/meilisearch:${MEILI_VERSION:-v1.13.3}
-    restart: always
+    restart: ${RESTART:-unless-stopped}
     environment:
       MEILI_NO_ANALYTICS: "true"
       MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
