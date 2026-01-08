@@ -1,0 +1,37 @@
+services:
+  # ===========================================================================
+  # AstrBot - 多平台大模型聊天机器人平台
+  # ===========================================================================
+  astrbot:
+    image: soulter/astrbot:${VERSION:-latest}
+    container_name: astrbot
+    restart: ${RESTART:-unless-stopped}
+    expose:
+      # WebUI 管理界面（必需）
+      - 6185
+      # QQ 个人号 WebSocket 连接（可选）
+      - 6199
+      # 企业微信 Webhook（可选）
+      - 6195
+      # QQ 官方接口 Webhook（可选）
+      - 6196
+    volumes:
+      # 数据持久化：配置文件、插件、知识库、聊天记录等
+      - astrbot_data:/AstrBot/data
+    env_file: .env
+    environment:
+      # 时区设置
+      - TZ=${TZ:-Asia/Shanghai}
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:6185"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  astrbot_data:
+    driver: local

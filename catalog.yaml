@@ -61,3 +61,7 @@ stacks:
   - id: octopus
     path: stacks/octopus
     category: infrastructure
+
+  - id: astrbot
+    path: stacks/astrbot
+    category: automation

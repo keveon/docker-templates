@@ -1,0 +1,14 @@
+name: AstrBot
+description: 一站式多平台大模型聊天机器人平台
+category: automation
+tags:
+  - bot
+  - chatbot
+  - llm
+  - qq
+  - telegram
+  - wechat
+  - automation
+  - plugins
+  - agent
+homepage: https://github.com/AstrBotDevs/AstrBot
