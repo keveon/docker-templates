@@ -1,0 +1,38 @@
+services:
+  # ===========================================================================
+  # Octopus - LLM API 聚合与负载均衡服务
+  # ===========================================================================
+  octopus:
+    image: bestrui/octopus:${VERSION:-latest}
+    container_name: octopus
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      # 数据持久化：SQLite 数据库、配置文件、统计信息
+      - octopus_data:/app/data
+    env_file: .env
+    environment:
+      # 时区设置
+      - TZ=${TZ:-Asia/Shanghai}
+      # 服务器配置（可通过环境变量覆盖 config.json）
+      - OCTOPUS_SERVER_PORT=${OCTOPUS_SERVER_PORT:-8080}
+      - OCTOPUS_SERVER_HOST=${OCTOPUS_SERVER_HOST:-0.0.0.0}
+      # 数据库配置
+      - OCTOPUS_DATABASE_TYPE=${OCTOPUS_DATABASE_TYPE:-sqlite}
+      - OCTOPUS_DATABASE_PATH=${OCTOPUS_DATABASE_PATH:-/app/data/data.db}
+      # 日志级别
+      - OCTOPUS_LOG_LEVEL=${OCTOPUS_LOG_LEVEL:-info}
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  octopus_data:
+    driver: local

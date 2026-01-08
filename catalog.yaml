@@ -57,3 +57,7 @@ stacks:
   - id: dozzle
     path: stacks/dozzle
     category: monitoring
+
+  - id: octopus
+    path: stacks/octopus
+    category: infrastructure

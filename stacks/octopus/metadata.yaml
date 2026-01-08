@@ -1,0 +1,11 @@
+name: Octopus
+description: LLM API 聚合与负载均衡服务
+category: infrastructure
+tags:
+  - llm
+  - api
+  - load-balancing
+  - openai
+  - anthropic
+  - gemini
+homepage: https://github.com/bestruirui/octopus
