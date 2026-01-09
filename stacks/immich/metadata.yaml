@@ -1,0 +1,11 @@
+name: Immich
+description: 高性能自托管照片和视频备份解决方案，支持 AI 面部识别、智能搜索、多设备同步
+category: media
+tags:
+  - photo
+  - video
+  - backup
+  - gallery
+  - ai
+  - media
+homepage: https://github.com/immich-app/immich

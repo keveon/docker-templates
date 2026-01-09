@@ -1,0 +1,113 @@
+services:
+  # ===========================================================================
+  # Immich Web API and Microservices
+  # ===========================================================================
+  immich-server:
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    container_name: immich-server
+    restart: ${RESTART:-unless-stopped}
+    expose:
+      - 2283
+    volumes:
+      # 媒体文件存储（照片、视频、缩略图等）
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      # 时区同步
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    environment:
+      - TZ=${TZ:-Asia/Shanghai}
+    depends_on:
+      redis:
+        condition: service_healthy
+      database:
+        condition: service_healthy
+
+  # ===========================================================================
+  # Immich Machine Learning Service
+  # ===========================================================================
+  immich-machine-learning:
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    container_name: immich-machine-learning
+    restart: ${RESTART:-unless-stopped}
+    expose:
+      - 3003
+    volumes:
+      # 机器学习模型缓存（面部识别模型、CLIP 模型等）
+      - immich_model_cache:/cache
+    env_file:
+      - .env
+    environment:
+      - TZ=${TZ:-Asia/Shanghai}
+    depends_on:
+      database:
+        condition: service_healthy
+
+  # ===========================================================================
+  # PostgreSQL Database with pgvector extension
+  # ===========================================================================
+  database:
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
+    container_name: immich-database
+    restart: ${RESTART:-unless-stopped}
+    volumes:
+      # 数据库数据存储（必须使用本地 SSD）
+      - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    environment:
+      # 数据库连接信息
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USERNAME:-postgres}
+      - POSTGRES_DB=${DB_DATABASE_NAME:-immich}
+      # 数据库初始化参数
+      - POSTGRES_INITDB_ARGS=--data-checksums
+      # 时区设置
+      - TZ=${TZ:-Asia/Shanghai}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready --dbname=\"$${POSTGRES_DB}\" --username=\"$${POSTGRES_USER}\" || exit 1; Chksum=\"$$(psql --dbname=\"$${POSTGRES_DB}\" --username=\"$${POSTGRES_USER}\" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')\"; echo \"checksum failure count is $$Chksum\"; [ \"$$Chksum\" = '0' ] || exit 1"
+        ]
+      interval: 5m
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    command:
+      [
+        "postgres",
+        "-c",
+        "shared_preload_libraries=vectors.so",
+        "-c",
+        "search_path=\"$${user}\", public, vectors",
+        "-c",
+        "logging_collector=on",
+        "-c",
+        "max_wal_size=2GB",
+        "-c",
+        "shared_buffers=512MB",
+        "-c",
+        "wal_compression=on"
+      ]
+
+  # ===========================================================================
+  # Redis Cache Service (Valkey - Redis fork)
+  # ===========================================================================
+  redis:
+    image: docker.io/valkey/valkey:8-bookworm@sha256:4a9f847af90037d59b34cd4d4ad14c6e055f46540cf4ff757aaafb266060fa28
+    container_name: immich-redis
+    restart: ${RESTART:-unless-stopped}
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    environment:
+      - TZ=${TZ:-Asia/Shanghai}
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  immich_model_cache:
+    driver: local
